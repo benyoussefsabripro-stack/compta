@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Diamond City ERP v5.0 - CEO Edition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- DIAMOND DESIGN SYSTEM --- */
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #C5A009;
+            --bg-deep: #050505;
+            --panel-bg: rgba(12, 12, 12, 0.98);
+            --sec-red: #ff4444;
+            --bill-blue: #4488ff;
+            --boss-purple: #9d00ff;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-deep);
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .bg-image {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1596561271387-951d8b7538a2?q=80&w=1920&auto=format&fit=crop') center/cover;
+            z-index: -1; filter: brightness(0.2);
+        }
+
+        /* TYPO & TITRES */
+        .brand {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(to bottom, #FFD700, #DAA520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        /* PANNEAUX */
+        .glass-panel {
+            background: var(--panel-bg);
+            border: 1px solid #333;
+            border-top: 3px solid var(--gold);
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+        }
+
+        /* INPUTS */
+        .input-dc {
+            background: #111; border: 1px solid #444; color: var(--gold);
+            font-family: 'Rajdhani', sans-serif; font-weight: bold; text-transform: uppercase;
+            text-align: center;
+        }
+        .input-dc:focus { background: #222; border-color: var(--gold); outline: none; color: #fff; }
+
+        /* BOUTONS NAVIGATION (HUB) */
+        .hub-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .hub-card:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+        .hub-icon { font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
+
+        /* ORGANIGRAMME STYLE */
+        .org-tree { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .org-level { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .org-card {
+            background: #111; border: 1px solid #444; padding: 15px; border-radius: 8px; width: 220px; text-align: center; position: relative;
+        }
+        .org-card.boss { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+        .org-card.manager { border-color: #fff; }
+        .org-card.employee { border-color: #333; opacity: 0.8; }
+        
+        .org-connector { width: 2px; height: 20px; background: #444; margin: 0 auto; }
+        
+        .role-badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 4px; background: #222; margin-bottom: 5px; display: inline-block;}
+
+        .btn-back { background: transparent; border: 1px solid #555; color: #888; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
+        .btn-back:hover { border-color: #fff; color: #fff; }
+        .text-gold { color: var(--gold) !important; }
+        .d-none { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="bg-image"></div>
+
+<div id="screen-login" class="d-flex align-items-center justify-content-center vh-100">
+    <div class="glass-panel p-5 text-center" style="width: 450px;">
+        <h1 class="brand mb-2" style="font-size: 3rem;">DIAMOND</h1>
+        <p class="text-secondary mb-5" style="letter-spacing: 4px;">CEO DASHBOARD</p>
+        <form onsubmit="event.preventDefault(); goTo('screen-hub');">
+            <input type="text" class="form-control input-dc mb-4" placeholder="IDENTIFIANT" value="Sabri">
+            <button class="btn btn-warning w-100 fw-bold py-2">CONNEXION</button>
+        </form>
+    </div>
+</div>
+
+<div id="screen-hub" class="d-none">
+    <nav class="navbar border-bottom border-secondary px-4 py-3" style="background: rgba(0,0,0,0.9);">
+        <div class="brand fs-4">DIAMOND CITY</div>
+        <button onclick="location.reload()" class="btn btn-outline-light btn-sm">DÉCONNEXION</button>
+    </nav>
+
+    <div class="container py-4">
+        
+        <div class="row g-3 justify-content-center mb-4">
+            <div class="col-md-2">
+                <div class="hub-card" onclick="goTo('screen-runs')">
+                    <div class="hub-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h6 class="text-white">RUNS</h6>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="hub-card" onclick="goTo('screen-sales')">
+                    <div class="hub-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+                    <h6 class="text-white">VENTES</h6>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="hub-card" onclick="goTo('screen-staff')">
+                    <div class="hub-icon"><i class="fa-solid fa-users"></i></div>
+                    <h6 class="text-white">RH</h6>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="hub-card" onclick="goTo('screen-bills')">
+                    <div class="hub-icon" style="color:var(--bill-blue)"><i class="fa-solid fa-file-invoice"></i></div>
+                    <h6 class="text-white">FACTURES</h6>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="hub-card" onclick="goTo('screen-org')" style="border-top: 2px solid var(--boss-purple);">
+                    <div class="hub-icon" style="color:var(--boss-purple)"><i class="fa-solid fa-sitemap"></i></div>
+                    <h6 class="text-white">HIERARCHIE</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-panel p-4">
+            <h5 class="text-gold border-bottom border-secondary pb-2 mb-3 text-center">COMPTABILITÉ GÉNÉRALE</h5>
+            
+            <div class="row text-center g-3 align-items-center">
+                <div class="col-md-2 border-end border-secondary">
+                    <div class="text-secondary small">BÉNÉFICE BRUT</div>
+                    <div class="fs-6 text-white" id="hub-brut">$ 0</div>
+                </div>
+                <div class="col-md-2 border-end border-secondary">
+                    <div class="text-danger small">TAXE SEC (30%)</div>
+                    <div class="fs-6 text-danger" id="hub-tax">$ 0</div>
+                </div>
+                <div class="col-md-2 border-end border-secondary">
+                    <div class="text-primary small" style="color: var(--bill-blue)!important;">FACTURES EXT.</div>
+                    <div class="fs-6" style="color: var(--bill-blue);" id="hub-bills">$ 0</div>
+                </div>
+                <div class="col-md-3 border-end border-secondary">
+                    <div class="small" style="color: var(--boss-purple);">PRIMES FIXES (PATRON)</div>
+                    <div class="fs-6 fw-bold" style="color: var(--boss-purple);" id="hub-fixed">$ 0</div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="text-success small fw-bold">SOLDE COFFRE RÉEL</div>
+                    <div class="fs-2 text-success fw-bold" id="hub-net">$ 0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="screen-org" class="d-none">
+    <div class="container py-5">
+        <div class="glass-panel p-4" style="min-height: 80vh;">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h4 class="text-white" style="color:var(--boss-purple)!important"><i class="fa-solid fa-sitemap me-2"></i>ORGANIGRAMME</h4>
+                <button onclick="goTo('screen-hub')" class="btn-back">RETOUR HUB</button>
+            </div>
+
+            <div class="org-tree" id="org-display">
+                </div>
+            
+            <div class="text-center mt-5">
+                 <div class="badge bg-dark border border-secondary p-2">Total Primes Fixes Semaine : <span class="text-warning" id="total-fixed-display">$ 0</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="screen-runs" class="d-none">
+    <div class="container py-5"><div class="glass-panel p-4">
+        <div class="d-flex justify-content-between mb-4"><h4>RUNS (96k)</h4><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div>
+        <table class="table table-dark table-hover text-center align-middle"><thead><tr class="text-secondary small"><th>NOM</th><th>NB RUNS</th><th>VALEUR</th></tr></thead><tbody id="list-runs"></tbody></table>
+    </div></div>
+</div>
+
+<div id="screen-sales" class="d-none">
+    <div class="container py-5"><div class="glass-panel p-4">
+        <div class="d-flex justify-content-between mb-4"><h4>VENTES</h4><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div>
+        <table class="table table-dark table-hover text-center align-middle"><thead><tr class="text-secondary small"><th>NOM</th><th>VENTES ($)</th><th>COM.</th></tr></thead><tbody id="list-sales"></tbody></table>
+    </div></div>
+</div>
+
+<div id="screen-bills" class="d-none">
+    <div class="container py-5"><div class="glass-panel p-4">
+        <div class="d-flex justify-content-between mb-4"><h4 style="color:var(--bill-blue)">FACTURES</h4><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div>
+        <div class="row mb-4"><div class="col-8"><input type="text" id="billName" class="form-control input-dc" placeholder="MOTIF"></div><div class="col-4"><input type="number" id="billAmount" class="form-control input-dc" placeholder="$"></div><button onclick="addBill()" class="btn btn-primary w-100 mt-2">PAYER</button></div>
+        <table class="table table-dark"><tbody id="list-bills"></tbody></table>
+    </div></div>
+</div>
+
+<div id="screen-staff" class="d-none">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-4"><div class="glass-panel p-4">
+                <h5 class="text-gold">RECRUTEMENT</h5>
+                <input type="text" id="newName" class="form-control input-dc mb-2" placeholder="NOM">
+                
+                <label class="text-secondary small">POSTE & SALAIRE</label>
+                <select id="newRole" class="form-select input-dc mb-2 text-start">
+                    <option value="emp">EMPLOYÉ (Commission)</option>
+                    <option value="boss">PATRON (Fixe 1M)</option>
+                    <option value="co">CO-PATRON (Fixe 500k)</option>
+                </select>
+
+                <label class="text-secondary small">COMMISSION (Si employé)</label>
+                <select id="newGrade" class="form-select input-dc mb-3">
+                    <option value="0.30">DÉBUTANT (30%)</option>
+                    <option value="0.45">CONFIRMÉ (45%)</option>
+                    <option value="0.60">EXPERT (60%)</option>
+                    <option value="0">CADRE (0% - Fixe)</option>
+                </select>
+                <button onclick="addEmp()" class="btn btn-warning w-100">VALIDER</button>
+            </div></div>
+            <div class="col-md-8"><div class="glass-panel p-4">
+                <div class="d-flex justify-content-between"><h5 class="text-white">EFFECTIF</h5><div><button onclick="resetAll()" class="btn btn-sm btn-danger me-2">RESET SEMAINE</button><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div></div>
+                <table class="table table-dark"><tbody id="list-staff"></tbody></table>
+            </div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const RUN_PRICE = 96000;
+    const TAX_RATE = 0.30;
+    
+    // CONFIGURATION DES POSTES ET SALAIRES FIXES
+    const ROLES = {
+        'boss': { label: 'PDG', fix: 1000000, color: 'var(--gold)' },
+        'co':   { label: 'CO-PDG', fix: 500000, color: '#fff' },
+        'emp':  { label: 'EMPLOYÉ', fix: 0, color: '#888' }
+    };
+
+    let dbEmp = []; 
+    let dbBills = [];
+
+    function goTo(id) {
+        document.querySelectorAll('[id^="screen-"]').forEach(el => el.classList.add('d-none'));
+        document.getElementById(id).classList.remove('d-none');
+        renderAll();
+    }
+
+    function addEmp() {
+        let nom = document.getElementById("newName").value;
+        let roleKey = document.getElementById("newRole").value;
+        let grade = parseFloat(document.getElementById("newGrade").value);
+        
+        if(nom) {
+            dbEmp.push({ 
+                id: Date.now(), 
+                nom: nom, 
+                role: roleKey, // boss, co, ou emp
+                grade: grade, 
+                runs: 0, ventes: 0 
+            });
+            document.getElementById("newName").value = "";
+            renderAll();
+        }
+    }
+
+    function addBill() {
+        let m = document.getElementById("billName").value;
+        let v = parseFloat(document.getElementById("billAmount").value);
+        if(m && v) { dbBills.push({id:Date.now(), motif:m, val:v}); renderAll(); }
+    }
+
+    function updateVal(id, type, val) {
+        let e = dbEmp.find(x => x.id == id);
+        if(e) { e[type] = parseInt(val)||0; renderAll(); }
+    }
+
+    function del(id, type) {
+        if(confirm("Supprimer ?")) {
+            if(type=='emp') dbEmp = dbEmp.filter(x => x.id != id);
+            if(type=='bill') dbBills = dbBills.filter(x => x.id != id);
+            renderAll();
+        }
+    }
+
+    function resetAll() {
+        if(confirm("Nouvelle Semaine ?")) {
+            dbEmp.forEach(e => { e.runs=0; e.ventes=0; });
+            dbBills = [];
+            renderAll();
+        }
+    }
+
+    function renderAll() {
+        let tCA=0, tSalVar=0, tBills=0, tFix=0;
+        let hR="", hS="", hSt="", hB="";
+
+        // 1. TRAITEMENT EMPLOYÉS
+        dbEmp.forEach(e => {
+            let ca = (e.runs*RUN_PRICE) + e.ventes;
+            let salVar = ca * e.grade;
+            let salFix = ROLES[e.role].fix;
+
+            tCA += ca;
+            tSalVar += salVar;
+            tFix += salFix;
+
+            // HTML LISTES
+            hR += `<tr><td>${e.nom}</td><td><input type="number" class="form-control bg-black text-white text-center mx-auto" style="width:70px" value="${e.runs}" onchange="updateVal(${e.id},'runs',this.value)"></td><td>$ ${(e.runs*RUN_PRICE).toLocaleString()}</td></tr>`;
+            
+            hS += `<tr><td>${e.nom}</td><td><input type="number" class="form-control bg-black text-white text-center mx-auto" style="width:100px" value="${e.ventes}" onchange="updateVal(${e.id},'ventes',this.value)"></td><td>$ ${(salVar).toLocaleString()}</td></tr>`;
+            
+            let roleBadg = `<span class="badge" style="color:${ROLES[e.role].color}; border:1px solid ${ROLES[e.role].color}">${ROLES[e.role].label}</span>`;
+            let fixBadg = salFix > 0 ? `<span class="text-white ms-2 small">+ ${salFix.toLocaleString()} Fixe</span>` : "";
+            
+            hSt += `<tr><td>${e.nom} ${roleBadg}</td><td class="text-end">$ ${(salVar+salFix).toLocaleString()} ${fixBadg}</td><td class="text-end"><button onclick="del(${e.id},'emp')" class="btn btn-sm btn-danger">X</button></td></tr>`;
+        });
+
+        // 2. FACTURES
+        dbBills.forEach(b => {
+            tBills += b.val;
+            hB += `<tr><td>${b.motif}</td><td class="text-end text-primary">$ ${b.val.toLocaleString()}</td><td class="text-end"><button onclick="del(${b.id},'bill')" class="btn btn-sm text-white">X</button></td></tr>`;
+        });
+
+        // 3. CALCULS FINAUX
+        let benefBrut = tCA - tSalVar; // CA - Commissions
+        let taxe = (benefBrut > 0) ? benefBrut * TAX_RATE : 0;
+        let netInter = benefBrut - taxe;
+        let netFinal = netInter - tBills - tFix; // On enlève les factures ET ton salaire fixe
+
+        // INJECTION
+        document.getElementById("list-runs").innerHTML = hR;
+        document.getElementById("list-sales").innerHTML = hS;
+        document.getElementById("list-staff").innerHTML = hSt;
+        document.getElementById("list-bills").innerHTML = hB;
+
+        document.getElementById("hub-brut").innerText = "$ " + benefBrut.toLocaleString();
+        document.getElementById("hub-tax").innerText = "- $ " + taxe.toLocaleString();
+        document.getElementById("hub-bills").innerText = "- $ " + tBills.toLocaleString();
+        document.getElementById("hub-fixed").innerText = "- $ " + tFix.toLocaleString();
+        
+        let elNet = document.getElementById("hub-net");
+        elNet.innerText = "$ " + netFinal.toLocaleString();
+        elNet.className = netFinal >= 0 ? "fs-2 fw-bold text-success" : "fs-2 fw-bold text-danger";
+
+        // 4. GENERATION ORGANIGRAMME
+        renderOrg(dbEmp);
+        document.getElementById("total-fixed-display").innerText = "$ " + tFix.toLocaleString();
+    }
+
+    function renderOrg(data) {
+        let tree = document.getElementById("org-display");
+        tree.innerHTML = "";
+
+        // Trier par importance : Boss > Co > Emp
+        let bosses = data.filter(e => e.role === 'boss');
+        let cos = data.filter(e => e.role === 'co');
+        let emps = data.filter(e => e.role === 'emp');
+
+        // ETAGE 1 : PATRON
+        if(bosses.length > 0) {
+            let row = document.createElement('div'); row.className = 'org-level';
+            bosses.forEach(b => {
+                row.innerHTML += `<div class="org-card boss"><div class="role-badge" style="color:var(--gold)">PDG</div><div class="fw-bold text-white fs-5">${b.nom}</div><div class="small text-secondary">Fixe: $1M</div></div>`;
+            });
+            tree.appendChild(row);
+            if(cos.length > 0 || emps.length > 0) tree.innerHTML += `<div class="org-connector"></div>`;
+        }
+
+        // ETAGE 2 : CO-PDG
+        if(cos.length > 0) {
+            let row = document.createElement('div'); row.className = 'org-level';
+            cos.forEach(c => {
+                row.innerHTML += `<div class="org-card manager"><div class="role-badge text-white">CO-PDG</div><div class="fw-bold text-white">${c.nom}</div><div class="small text-secondary">Fixe: $500k</div></div>`;
+            });
+            tree.appendChild(row);
+            if(emps.length > 0) tree.innerHTML += `<div class="org-connector"></div>`;
+        }
+
+        // ETAGE 3 : EMPLOYES
+        if(emps.length > 0) {
+            let row = document.createElement('div'); row.className = 'org-level';
+            emps.forEach(e => {
+                row.innerHTML += `<div class="org-card employee"><div class="role-badge text-secondary">STAFF</div><div class="text-white">${e.nom}</div><div class="small text-muted">Com: ${(e.grade*100)}%</div></div>`;
+            });
+            tree.appendChild(row);
+        }
+    }
+</script>
+
+</body>
+</html>
