@@ -2,258 +2,307 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Diamond City ERP v5.0 - CEO Edition</title>
+    <title>Diamond City OS v11.0 - Full Analytics</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- DIAMOND DESIGN SYSTEM --- */
+        /* --- DESIGN SYSTEM PRESTIGE --- */
         :root {
-            --gold: #FFD700;
-            --gold-dim: #C5A009;
-            --bg-deep: #050505;
-            --panel-bg: rgba(12, 12, 12, 0.98);
-            --sec-red: #ff4444;
-            --bill-blue: #4488ff;
-            --boss-purple: #9d00ff;
+            --bg-deep: #020205;
+            --sidebar-bg: rgba(10, 10, 14, 0.95);
+            --gold-grad: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+            --gold-accent: #FFD700;
+            --neon-red: #ff2a2a;
+            --neon-blue: #2a8cff;
+            --neon-purple: #bd00ff;
+            --neon-green: #00ff9d;
+            --glass-panel: rgba(20, 20, 25, 0.75);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(25px);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--bg-deep);
-            color: #fff;
+            color: #e0e0e0;
             margin: 0;
-            overflow-x: hidden;
+            overflow: hidden;
+            letter-spacing: 0.5px;
         }
 
         .bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1596561271387-951d8b7538a2?q=80&w=1920&auto=format&fit=crop') center/cover;
-            z-index: -1; filter: brightness(0.2);
+            background: linear-gradient(to bottom, rgba(5, 5, 10, 0.8), rgba(30, 10, 40, 0.9)), url('https://images.unsplash.com/photo-1596561271387-951d8b7538a2?q=80&w=1920&auto=format&fit=crop') center/cover;
+            z-index: -1; filter: contrast(1.2);
         }
 
-        /* TYPO & TITRES */
-        .brand {
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(to bottom, #FFD700, #DAA520);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 2px;
+        .brand-title, h1, h2, h3, h4, h5 {
+            font-family: 'Cinzel', serif; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
         }
+        .text-gold { color: var(--gold-accent) !important; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .text-secondary { color: #aaa !important; font-weight: 500; letter-spacing: 1px; }
 
-        /* PANNEAUX */
         .glass-panel {
-            background: var(--panel-bg);
-            border: 1px solid #333;
-            border-top: 3px solid var(--gold);
-            border-radius: 8px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            background: var(--glass-panel); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: var(--glass-border); border-radius: 15px; box-shadow: var(--glass-shadow);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.2); transition: all 0.3s ease;
+        }
+        .glass-panel:hover { border-color: rgba(255, 215, 0, 0.3); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255,255,255,0.3); }
+
+        .sidebar {
+            position: fixed; top: 0; left: 0; height: 100vh; width: 260px;
+            background: var(--sidebar-bg); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,215,0,0.1);
+            display: flex; flex-direction: column; z-index: 100; box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
 
-        /* INPUTS */
+        .brand-box { padding: 40px 20px; text-align: center; }
+        
+        .nav-item {
+            padding: 16px 30px; cursor: pointer; color: #888; transition: 0.4s;
+            display: flex; align-items: center; font-size: 1rem; font-weight: 600; position: relative; overflow: hidden;
+        }
+        .nav-item i { width: 30px; font-size: 1.2rem; transition: 0.3s; }
+        .nav-item:hover { color: #fff; background: rgba(255,255,255,0.03); }
+        .nav-item:hover i { transform: scale(1.1); color: var(--gold-accent); text-shadow: 0 0 10px var(--gold-accent); }
+        .nav-item.active {
+            color: var(--gold-accent); background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
+            border-left: 4px solid var(--gold-accent); box-shadow: inset 10px 0 20px -10px rgba(255, 215, 0, 0.5);
+        }
+
+        .user-profile { padding: 25px; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
+        .main-content { margin-left: 260px; height: 100vh; overflow-y: auto; padding: 50px; }
+
         .input-dc {
-            background: #111; border: 1px solid #444; color: var(--gold);
-            font-family: 'Rajdhani', sans-serif; font-weight: bold; text-transform: uppercase;
-            text-align: center;
+            background: rgba(0,0,0,0.2); border: none; border-bottom: 2px solid rgba(255,255,255,0.2);
+            color: var(--gold-accent); font-family: 'Rajdhani', sans-serif; font-weight: 700; text-transform: uppercase;
+            text-align: center; padding: 15px; border-radius: 0; transition: 0.3s;
         }
-        .input-dc:focus { background: #222; border-color: var(--gold); outline: none; color: #fff; }
+        .input-dc:focus {
+            background: rgba(0,0,0,0.4); border-bottom-color: var(--gold-accent); outline: none; color: #fff;
+            box-shadow: 0 10px 20px -10px rgba(255, 215, 0, 0.3);
+        }
+        .form-select.input-dc { text-align: left; } 
+        .form-select.input-dc option { background-color: #111; color: white; }
 
-        /* BOUTONS NAVIGATION (HUB) */
-        .hub-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        .btn-gold {
+            background: var(--gold-grad); border: none; color: #1a1a1a; font-weight: 800; padding: 12px 25px;
+            border-radius: 50px; box-shadow: 0 5px 15px rgba(180, 135, 25, 0.4); transition: 0.3s; position: relative; overflow: hidden;
         }
-        .hub-card:hover {
-            background: rgba(255, 215, 0, 0.05);
-            border-color: var(--gold);
-            transform: translateY(-5px);
-        }
-        .hub-icon { font-size: 2rem; color: var(--gold); margin-bottom: 10px; }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(180, 135, 25, 0.6); color: #000; }
 
-        /* ORGANIGRAMME STYLE */
-        .org-tree { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .org-level { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .org-card {
-            background: #111; border: 1px solid #444; padding: 15px; border-radius: 8px; width: 220px; text-align: center; position: relative;
-        }
-        .org-card.boss { border-color: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
-        .org-card.manager { border-color: #fff; }
-        .org-card.employee { border-color: #333; opacity: 0.8; }
-        
-        .org-connector { width: 2px; height: 20px; background: #444; margin: 0 auto; }
-        
-        .role-badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 4px; background: #222; margin-bottom: 5px; display: inline-block;}
+        .table-hover tbody tr:hover { background-color: rgba(255, 215, 0, 0.05) !important; box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.1); }
+        .table thead th { border-bottom: 1px solid rgba(255, 215, 0, 0.2); color: #888; font-weight: 400; letter-spacing: 2px; padding-bottom: 15px; }
+        .table tbody td { border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 20px 10px; font-weight: 600; }
 
-        .btn-back { background: transparent; border: 1px solid #555; color: #888; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
-        .btn-back:hover { border-color: #fff; color: #fff; }
-        .text-gold { color: var(--gold) !important; }
+        .dash-card {
+            padding: 25px; border-radius: 15px; text-align: center; background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .dash-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .dash-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; }
+        .dash-card.gold::before { background: var(--gold-accent); box-shadow: 0 0 10px var(--gold-accent); }
+        .dash-card.red::before { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
+        .dash-card.blue::before { background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
+        .dash-card.purple::before { background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple); }
+
         .d-none { display: none !important; }
+        .badge-neon { background: rgba(0,0,0,0.3); border: 1px solid currentColor; box-shadow: 0 0 5px currentColor; padding: 5px 10px; border-radius: 30px; }
+
+        .form-check-input {
+            background-color: #333; border-color: #555; width: 3em; height: 1.5em; cursor: pointer;
+        }
+        .form-check-input:checked {
+            background-color: var(--neon-green); border-color: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .org-tree { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .org-level { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .org-card {
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 30px; border-radius: 12px; min-width: 200px; text-align: center; transition: 0.3s; position: relative;
+        }
+        .org-card.boss { border: 1px solid var(--gold-accent); box-shadow: 0 0 25px rgba(255, 215, 0, 0.3), inset 0 0 10px rgba(255,215,0,0.2); }
+        .org-card.boss::after { content: '👑'; position: absolute; top:-15px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; }
     </style>
 </head>
 <body>
 
 <div class="bg-image"></div>
 
-<div id="screen-login" class="d-flex align-items-center justify-content-center vh-100">
-    <div class="glass-panel p-5 text-center" style="width: 450px;">
-        <h1 class="brand mb-2" style="font-size: 3rem;">DIAMOND</h1>
-        <p class="text-secondary mb-5" style="letter-spacing: 4px;">CEO DASHBOARD</p>
-        <form onsubmit="event.preventDefault(); goTo('screen-hub');">
-            <input type="text" class="form-control input-dc mb-4" placeholder="IDENTIFIANT" value="Sabri">
-            <button class="btn btn-warning w-100 fw-bold py-2">CONNEXION</button>
+<div id="screen-login" class="d-flex align-items-center justify-content-center vh-100" style="position:fixed; width:100%; z-index:9999; background: radial-gradient(circle at center, rgba(20,20,30,0.8), #000);">
+    <div class="glass-panel p-5 text-center" style="width: 500px; border-top: none; box-shadow: 0 0 100px rgba(255, 215, 0, 0.15);">
+        <div class="mb-5">
+            <h1 class="brand-title mb-3" style="font-size: 4rem;">DIAMOND</h1>
+            <div style="height: 2px; width: 100px; background: var(--gold-grad); margin: 0 auto 20px;"></div>
+            <p class="text-secondary" style="letter-spacing: 6px;">Casino</p>
+        </div>
+        <form onsubmit="event.preventDefault(); login();">
+            <input type="text" class="form-control input-dc mb-5" style="font-size: 1.2rem;" placeholder="IDENTIFIANT" value="Sabri">
+            <button class="btn btn-gold w-100 py-3 fs-5">OUVRIR LE SYSTÈME</button>
         </form>
     </div>
 </div>
 
-<div id="screen-hub" class="d-none">
-    <nav class="navbar border-bottom border-secondary px-4 py-3" style="background: rgba(0,0,0,0.9);">
-        <div class="brand fs-4">DIAMOND CITY</div>
-        <button onclick="location.reload()" class="btn btn-outline-light btn-sm">DÉCONNEXION</button>
+<div id="app-layout" class="d-none">
+    
+    <nav class="sidebar">
+        <div class="brand-box">
+            <div class="brand-title fs-3">DIAMOND</div>
+            <div class="text-gold small" style="letter-spacing: 3px; opacity: 0.7;">Casino</div>
+        </div>
+        <div class="nav-links mt-4">
+            <div class="nav-item active" onclick="navTo('view-dashboard', this)"><i class="fa-solid fa-chart-pie"></i> ACCUEIL</div>
+            <div class="nav-item" onclick="navTo('view-runs', this)"><i class="fa-solid fa-truck-fast"></i> LOGISTIQUE</div>
+            <div class="nav-item" onclick="navTo('view-sales', this)"><i class="fa-solid fa-martini-glass-citrus"></i> VENTES</div>
+            <div class="nav-item" onclick="navTo('view-staff', this)"><i class="fa-solid fa-users"></i> STAFF & RH</div>
+            <div class="nav-item" onclick="navTo('view-bills', this)"><i class="fa-solid fa-file-invoice-dollar"></i> TRÉSORERIE</div>
+            <div class="nav-item" onclick="navTo('view-org', this)"><i class="fa-solid fa-sitemap"></i> ORGANIGRAMME</div>
+            <div class="nav-item" onclick="navTo('view-pay', this)" style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.05)"><i class="fa-solid fa-money-bill-wave" style="color:var(--neon-green)"></i> SALAIRES</div>
+        </div>
+        <div class="user-profile">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div style="width: 40px; height: 40px; background: var(--gold-grad); border-radius: 50%; display:flex; align-items:center; justify-content:center; font-weight:bold; color:black; margin-right: 15px;">S</div>
+                    <div>
+                        <div class="text-white fw-bold">SABRI</div>
+                        <div class="small" style="color: var(--gold-accent);">● PDG</div>
+                    </div>
+                </div>
+                <button onclick="location.reload()" class="btn btn-sm btn-outline-danger rounded-circle" style="width:35px; height:35px;"><i class="fa-solid fa-power-off"></i></button>
+            </div>
+        </div>
     </nav>
 
-    <div class="container py-4">
+    <div class="main-content">
         
-        <div class="row g-3 justify-content-center mb-4">
-            <div class="col-md-2">
-                <div class="hub-card" onclick="goTo('screen-runs')">
-                    <div class="hub-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                    <h6 class="text-white">RUNS</h6>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="hub-card" onclick="goTo('screen-sales')">
-                    <div class="hub-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
-                    <h6 class="text-white">VENTES</h6>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="hub-card" onclick="goTo('screen-staff')">
-                    <div class="hub-icon"><i class="fa-solid fa-users"></i></div>
-                    <h6 class="text-white">RH</h6>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="hub-card" onclick="goTo('screen-bills')">
-                    <div class="hub-icon" style="color:var(--bill-blue)"><i class="fa-solid fa-file-invoice"></i></div>
-                    <h6 class="text-white">FACTURES</h6>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="hub-card" onclick="goTo('screen-org')" style="border-top: 2px solid var(--boss-purple);">
-                    <div class="hub-icon" style="color:var(--boss-purple)"><i class="fa-solid fa-sitemap"></i></div>
-                    <h6 class="text-white">HIERARCHIE</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="glass-panel p-4">
-            <h5 class="text-gold border-bottom border-secondary pb-2 mb-3 text-center">COMPTABILITÉ GÉNÉRALE</h5>
+        <div id="view-dashboard">
+            <h3 class="text-white mb-5">VUE <span class="text-gold">FINANCIÈRE</span></h3>
             
-            <div class="row text-center g-3 align-items-center">
-                <div class="col-md-2 border-end border-secondary">
-                    <div class="text-secondary small">BÉNÉFICE BRUT</div>
-                    <div class="fs-6 text-white" id="hub-brut">$ 0</div>
-                </div>
-                <div class="col-md-2 border-end border-secondary">
-                    <div class="text-danger small">TAXE SEC (30%)</div>
-                    <div class="fs-6 text-danger" id="hub-tax">$ 0</div>
-                </div>
-                <div class="col-md-2 border-end border-secondary">
-                    <div class="text-primary small" style="color: var(--bill-blue)!important;">FACTURES EXT.</div>
-                    <div class="fs-6" style="color: var(--bill-blue);" id="hub-bills">$ 0</div>
-                </div>
-                <div class="col-md-3 border-end border-secondary">
-                    <div class="small" style="color: var(--boss-purple);">PRIMES FIXES (PATRON)</div>
-                    <div class="fs-6 fw-bold" style="color: var(--boss-purple);" id="hub-fixed">$ 0</div>
-                </div>
-                
+            <div class="glass-panel p-4 mb-5 text-center position-relative overflow-hidden">
+                <div style="position: absolute; top:0; left:0; width:100%; height:4px; background: var(--gold-grad); box-shadow: 0 0 15px var(--gold-accent);"></div>
+                <h5 class="text-secondary mb-2" style="letter-spacing: 3px;">CHIFFRE D'AFFAIRES GLOBAL</h5>
+                <h1 class="display-3 fw-bold text-gold" id="dash-ca">$ 0</h1>
+                <p class="text-muted small mt-2">Cumul Total des Entrées (Runs + Ventes)</p>
+            </div>
+
+            <div class="row g-4 mb-5">
                 <div class="col-md-3">
-                    <div class="text-success small fw-bold">SOLDE COFFRE RÉEL</div>
-                    <div class="fs-2 text-success fw-bold" id="hub-net">$ 0</div>
+                    <div class="dash-card purple">
+                        <div class="text-secondary small mb-2">TOTAL SALAIRES</div>
+                        <div class="fs-4 fw-bold" style="color:var(--neon-purple)" id="dash-salaries">$ 0</div>
+                    </div>
+                </div>
+                 <div class="col-md-3">
+                    <div class="dash-card blue">
+                        <div class="text-secondary small mb-2">CHARGES EXT.</div>
+                        <div class="fs-4 fw-bold" style="color:var(--neon-blue)" id="dash-charges">$ 0</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dash-card gold">
+                        <div class="text-secondary small mb-2">BÉNÉFICE IMPOSABLE</div>
+                        <div class="fs-4 fw-bold text-white" id="dash-brut">$ 0</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dash-card red">
+                        <div class="text-secondary small mb-2">TAXE SEC (30%)</div>
+                        <div class="fs-4 fw-bold" style="color: var(--neon-red);" id="dash-tax">$ 0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel p-5 text-center position-relative overflow-hidden" style="border-top: none;">
+                <div style="position: absolute; top:-50%; left:-50%; width:200%; height:200%; background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 60%); z-index:-1;"></div>
+                <h5 class="text-secondary mb-3" style="letter-spacing: 3px;">SOLDE NET RÉEL</h5>
+                <h1 class="display-2 fw-bold" style="color: var(--neon-green); text-shadow: 0 0 30px rgba(0,255,157,0.5);" id="dash-net">$ 0</h1>
+            </div>
+        </div>
+
+        <div id="view-runs" class="d-none">
+            <h3 class="text-white mb-5">LOGISTIQUE <span class="text-gold">RUNS</span></h3>
+            <div class="glass-panel p-4" style="border-top: none;">
+                <table class="table table-dark table-hover align-middle text-center"><thead><tr><th>NOM</th><th>GRADE</th><th>NB RUNS</th><th>VALEUR (96k)</th></tr></thead><tbody id="list-runs"></tbody></table>
+            </div>
+        </div>
+
+        <div id="view-sales" class="d-none">
+            <h3 class="text-white mb-5">VENTES <span class="text-gold">DIRECTES</span></h3>
+            <div class="glass-panel p-4" style="border-top: none;">
+                <table class="table table-dark table-hover align-middle text-center"><thead><tr><th>NOM</th><th>GRADE</th><th>MONTANT ($)</th><th>COM.</th></tr></thead><tbody id="list-sales"></tbody></table>
+            </div>
+        </div>
+
+        <div id="view-staff" class="d-none">
+            <h3 class="text-white mb-5">RESSOURCES <span class="text-gold">HUMAINES</span></h3>
+            <div class="row g-5">
+                <div class="col-md-4">
+                    <div class="glass-panel p-4" style="border-top: 3px solid var(--gold-accent);">
+                        <h5 class="text-gold mb-4">RECRUTEMENT</h5>
+                        <div class="mb-4"><label class="text-secondary small mb-2">IDENTITÉ</label><input type="text" id="newName" class="form-control input-dc" placeholder="NOM RP"></div>
+                        <div class="mb-4"><label class="text-secondary small mb-2">POSTE</label><select id="newRole" class="form-select input-dc text-start ps-3" style="cursor: pointer;" onchange="updateForm()"><option value="emp">EMPLOYÉ</option><option value="co">CO-PATRON</option></select></div>
+                        <div class="mb-5">
+                            <label class="text-secondary small mb-2">POURCENTAGE</label>
+                            <select id="newGrade" class="form-select input-dc text-start ps-3" style="cursor: pointer;"><option value="0.30">DÉBUTANT (30%)</option><option value="0.45">CONFIRMÉ (45%)</option><option value="0.60">EXPERT (60%)</option><option value="0.75" disabled id="opt-co">CO-PATRON (75%)</option></select>
+                        </div>
+                        <button onclick="addEmp()" class="btn btn-gold w-100 py-3">VALIDER L'EMBAUCHE</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="glass-panel p-4" style="border-top: none;">
+                        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary"><h5 class="text-white m-0">EFFECTIF ACTIF</h5><button onclick="resetWeek()" class="btn btn-outline-danger px-4 rounded-pill fw-bold">RESET SEMAINE</button></div>
+                        <table class="table table-dark align-middle"><tbody id="list-staff"></tbody></table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div id="screen-org" class="d-none">
-    <div class="container py-5">
-        <div class="glass-panel p-4" style="min-height: 80vh;">
-            <div class="d-flex justify-content-between align-items-center mb-5">
-                <h4 class="text-white" style="color:var(--boss-purple)!important"><i class="fa-solid fa-sitemap me-2"></i>ORGANIGRAMME</h4>
-                <button onclick="goTo('screen-hub')" class="btn-back">RETOUR HUB</button>
-            </div>
-
-            <div class="org-tree" id="org-display">
+        <div id="view-bills" class="d-none">
+            <h3 class="text-white mb-5">DÉPENSES & <span style="color:var(--neon-blue)">FACTURES</span></h3>
+            <div class="glass-panel p-5" style="border-top: 3px solid var(--neon-blue);">
+                <div class="row mb-5 align-items-end g-3">
+                    <div class="col-md-6"><label class="text-secondary small mb-2">MOTIF</label><input type="text" id="billName" class="form-control input-dc text-start ps-4" placeholder="Ex: Gruppe 6"></div>
+                    <div class="col-md-4"><label class="text-secondary small mb-2">MONTANT</label><input type="number" id="billAmount" class="form-control input-dc" placeholder="$"></div>
+                    <div class="col-md-2"><button onclick="addBill()" class="btn btn-primary w-100 py-3 fw-bold rounded-pill" style="background:var(--neon-blue); border:none;">PAYER</button></div>
                 </div>
-            
-            <div class="text-center mt-5">
-                 <div class="badge bg-dark border border-secondary p-2">Total Primes Fixes Semaine : <span class="text-warning" id="total-fixed-display">$ 0</span></div>
+                <table class="table table-dark align-middle"><tbody id="list-bills"></tbody></table>
             </div>
         </div>
-    </div>
-</div>
 
-<div id="screen-runs" class="d-none">
-    <div class="container py-5"><div class="glass-panel p-4">
-        <div class="d-flex justify-content-between mb-4"><h4>RUNS (96k)</h4><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div>
-        <table class="table table-dark table-hover text-center align-middle"><thead><tr class="text-secondary small"><th>NOM</th><th>NB RUNS</th><th>VALEUR</th></tr></thead><tbody id="list-runs"></tbody></table>
-    </div></div>
-</div>
-
-<div id="screen-sales" class="d-none">
-    <div class="container py-5"><div class="glass-panel p-4">
-        <div class="d-flex justify-content-between mb-4"><h4>VENTES</h4><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div>
-        <table class="table table-dark table-hover text-center align-middle"><thead><tr class="text-secondary small"><th>NOM</th><th>VENTES ($)</th><th>COM.</th></tr></thead><tbody id="list-sales"></tbody></table>
-    </div></div>
-</div>
-
-<div id="screen-bills" class="d-none">
-    <div class="container py-5"><div class="glass-panel p-4">
-        <div class="d-flex justify-content-between mb-4"><h4 style="color:var(--bill-blue)">FACTURES</h4><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div>
-        <div class="row mb-4"><div class="col-8"><input type="text" id="billName" class="form-control input-dc" placeholder="MOTIF"></div><div class="col-4"><input type="number" id="billAmount" class="form-control input-dc" placeholder="$"></div><button onclick="addBill()" class="btn btn-primary w-100 mt-2">PAYER</button></div>
-        <table class="table table-dark"><tbody id="list-bills"></tbody></table>
-    </div></div>
-</div>
-
-<div id="screen-staff" class="d-none">
-    <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-md-4"><div class="glass-panel p-4">
-                <h5 class="text-gold">RECRUTEMENT</h5>
-                <input type="text" id="newName" class="form-control input-dc mb-2" placeholder="NOM">
-                
-                <label class="text-secondary small">POSTE & SALAIRE</label>
-                <select id="newRole" class="form-select input-dc mb-2 text-start">
-                    <option value="emp">EMPLOYÉ (Commission)</option>
-                    <option value="boss">PATRON (Fixe 1M)</option>
-                    <option value="co">CO-PATRON (Fixe 500k)</option>
-                </select>
-
-                <label class="text-secondary small">COMMISSION (Si employé)</label>
-                <select id="newGrade" class="form-select input-dc mb-3">
-                    <option value="0.30">DÉBUTANT (30%)</option>
-                    <option value="0.45">CONFIRMÉ (45%)</option>
-                    <option value="0.60">EXPERT (60%)</option>
-                    <option value="0">CADRE (0% - Fixe)</option>
-                </select>
-                <button onclick="addEmp()" class="btn btn-warning w-100">VALIDER</button>
-            </div></div>
-            <div class="col-md-8"><div class="glass-panel p-4">
-                <div class="d-flex justify-content-between"><h5 class="text-white">EFFECTIF</h5><div><button onclick="resetAll()" class="btn btn-sm btn-danger me-2">RESET SEMAINE</button><button onclick="goTo('screen-hub')" class="btn-back">RETOUR</button></div></div>
-                <table class="table table-dark"><tbody id="list-staff"></tbody></table>
-            </div></div>
+        <div id="view-org" class="d-none">
+            <h3 class="text-white mb-5 text-center">ORGANIGRAMME</h3>
+            <div class="glass-panel p-5 text-center" style="min-height: 70vh; border-top: none; background: radial-gradient(circle at center, rgba(189, 0, 255, 0.05), transparent);"><div id="org-tree" class="org-tree"></div></div>
         </div>
+
+        <div id="view-pay" class="d-none">
+            <h3 class="text-white mb-5">BULLETINS DE <span style="color:var(--neon-green)">PAIE</span></h3>
+            <div class="glass-panel p-4" style="border-top: 3px solid var(--neon-green);">
+                <table class="table table-dark table-hover align-middle text-center mb-5">
+                    <thead>
+                        <tr>
+                            <th class="text-start ps-4">EMPLOYÉ</th>
+                            <th>PRIME FIXE</th>
+                            <th>VERSER PRIME ?</th>
+                            <th>COM. RUNS</th>
+                            <th>COM. VENTES</th>
+                            <th class="text-end pe-4">TOTAL À PAYER</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-pay"></tbody>
+                </table>
+                <div class="p-4 rounded text-center" style="background: rgba(0,255,157,0.05); border: 1px solid var(--neon-green);">
+                    <h5 class="text-secondary mb-2">TOTAL LIQUIDE À SORTIR DE LA BANQUE</h5>
+                    <h1 class="fw-bold" style="color:var(--neon-green)" id="total-cashout">$ 0</h1>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -261,162 +310,130 @@
     const RUN_PRICE = 96000;
     const TAX_RATE = 0.30;
     
-    // CONFIGURATION DES POSTES ET SALAIRES FIXES
     const ROLES = {
-        'boss': { label: 'PDG', fix: 1000000, color: 'var(--gold)' },
-        'co':   { label: 'CO-PDG', fix: 500000, color: '#fff' },
-        'emp':  { label: 'EMPLOYÉ', fix: 0, color: '#888' }
+        'boss': { label: 'PDG', fix: 1000000, color: 'var(--gold-accent)', neon: 'var(--gold-accent)' },
+        'co':   { label: 'CO-PDG', fix: 500000, color: '#fff', neon: 'var(--neon-purple)' },
+        'emp':  { label: 'STAFF', fix: 0, color: '#888', neon: 'var(--neon-blue)' }
     };
 
-    let dbEmp = []; 
+    let dbEmp = [
+        { id: 1, nom: "Sabri", role: "boss", grade: 0.85, runs: 0, ventes: 0, primeActive: true },
+        { id: 2, nom: "Max", role: "co", grade: 0.75, runs: 0, ventes: 0, primeActive: true }
+    ];
     let dbBills = [];
 
-    function goTo(id) {
-        document.querySelectorAll('[id^="screen-"]').forEach(el => el.classList.add('d-none'));
-        document.getElementById(id).classList.remove('d-none');
-        renderAll();
+    function login() {
+        document.getElementById('screen-login').style.opacity = '0';
+        setTimeout(() => { document.getElementById('screen-login').classList.add('d-none'); document.getElementById('app-layout').classList.remove('d-none'); renderAll(); }, 500);
     }
-
+    function navTo(v, e) {
+        document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('d-none')); document.getElementById(v).classList.remove('d-none');
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); e.classList.add('active'); renderAll();
+    }
+    function updateForm() {
+        let r = document.getElementById("newRole").value; let g = document.getElementById("newGrade");
+        if(r==='co') { g.value="0.75"; g.disabled=true; document.getElementById("opt-co").disabled=false; } 
+        else { g.value="0.30"; g.disabled=false; document.getElementById("opt-co").disabled=true; }
+    }
     function addEmp() {
-        let nom = document.getElementById("newName").value;
-        let roleKey = document.getElementById("newRole").value;
-        let grade = parseFloat(document.getElementById("newGrade").value);
-        
-        if(nom) {
-            dbEmp.push({ 
-                id: Date.now(), 
-                nom: nom, 
-                role: roleKey, // boss, co, ou emp
-                grade: grade, 
-                runs: 0, ventes: 0 
-            });
-            document.getElementById("newName").value = "";
-            renderAll();
-        }
+        let n = document.getElementById("newName").value; let r = document.getElementById("newRole").value; let g = parseFloat(document.getElementById("newGrade").value);
+        if(r==='co') g=0.75;
+        if(n) { dbEmp.push({ id: Date.now(), nom: n, role: r, grade: g, runs: 0, ventes: 0, primeActive: true }); document.getElementById("newName").value = ""; renderAll(); }
     }
-
     function addBill() {
-        let m = document.getElementById("billName").value;
-        let v = parseFloat(document.getElementById("billAmount").value);
-        if(m && v) { dbBills.push({id:Date.now(), motif:m, val:v}); renderAll(); }
+        let m = document.getElementById("billName").value; let v = parseFloat(document.getElementById("billAmount").value);
+        if(m && v) { dbBills.push({id: Date.now(), motif: m, val: v}); document.getElementById("billName").value=""; document.getElementById("billAmount").value=""; renderAll(); }
     }
-
-    function updateVal(id, type, val) {
-        let e = dbEmp.find(x => x.id == id);
-        if(e) { e[type] = parseInt(val)||0; renderAll(); }
-    }
-
-    function del(id, type) {
-        if(confirm("Supprimer ?")) {
-            if(type=='emp') dbEmp = dbEmp.filter(x => x.id != id);
-            if(type=='bill') dbBills = dbBills.filter(x => x.id != id);
-            renderAll();
-        }
-    }
-
-    function resetAll() {
-        if(confirm("Nouvelle Semaine ?")) {
-            dbEmp.forEach(e => { e.runs=0; e.ventes=0; });
-            dbBills = [];
-            renderAll();
-        }
-    }
+    function updateVal(id, t, v) { let e = dbEmp.find(x => x.id == id); if(e) { e[t] = parseInt(v)||0; renderAll(); } }
+    function togglePrime(id) { let e = dbEmp.find(x => x.id == id); if(e) { e.primeActive = !e.primeActive; renderAll(); } }
+    function del(id, t) { if(confirm("Supprimer ?")) { if(t=='emp') dbEmp = dbEmp.filter(x => x.id != id); if(t=='bill') dbBills = dbBills.filter(x => x.id != id); renderAll(); } }
+    function resetWeek() { if(confirm("Nouvelle Semaine ?")) { dbEmp.forEach(e => { e.runs=0; e.ventes=0; e.primeActive=true; }); dbBills = []; renderAll(); } }
 
     function renderAll() {
         let tCA=0, tSalVar=0, tBills=0, tFix=0;
-        let hR="", hS="", hSt="", hB="";
+        let hR="", hS="", hSt="", hB="", hP="";
 
-        // 1. TRAITEMENT EMPLOYÉS
         dbEmp.forEach(e => {
             let ca = (e.runs*RUN_PRICE) + e.ventes;
             let salVar = ca * e.grade;
-            let salFix = ROLES[e.role].fix;
+            
+            let salFixBase = ROLES[e.role].fix;
+            let salFixReel = (salFixBase > 0 && e.primeActive) ? salFixBase : 0;
 
-            tCA += ca;
-            tSalVar += salVar;
-            tFix += salFix;
+            let comRun = (e.runs*RUN_PRICE) * e.grade;
+            let comVente = e.ventes * e.grade;
+            let totalPerso = comRun + comVente + salFixReel;
 
-            // HTML LISTES
-            hR += `<tr><td>${e.nom}</td><td><input type="number" class="form-control bg-black text-white text-center mx-auto" style="width:70px" value="${e.runs}" onchange="updateVal(${e.id},'runs',this.value)"></td><td>$ ${(e.runs*RUN_PRICE).toLocaleString()}</td></tr>`;
+            tCA += ca; tSalVar += salVar; tFix += salFixReel;
+
+            hR += `<tr><td class="fw-bold">${e.nom}</td><td><span class="badge-neon" style="color:${ROLES[e.role].color}">${(e.grade*100)}%</span></td><td><input type="number" class="input-dc mx-auto" style="width:80px;padding:5px;" value="${e.runs}" onchange="updateVal(${e.id},'runs',this.value)"></td><td class="text-gold fw-bold">$ ${(e.runs*RUN_PRICE).toLocaleString()}</td></tr>`;
+            hS += `<tr><td class="fw-bold">${e.nom}</td><td><span class="badge-neon" style="color:${ROLES[e.role].color}">${(e.grade*100)}%</span></td><td><input type="number" class="input-dc mx-auto" style="width:120px;padding:5px;" value="${e.ventes}" onchange="updateVal(${e.id},'ventes',this.value)"></td><td class="text-gold fw-bold">$ ${(comVente).toLocaleString()}</td></tr>`;
+            let btnDel = (e.role === 'boss' || e.role === 'co') ? '' : `<button onclick="del(${e.id},'emp')" class="btn btn-sm btn-outline-danger rounded-circle" style="width:30px;height:30px;padding:0;"><i class="fa-solid fa-xmark"></i></button>`;
+            hSt += `<tr><td><span class="fw-bold text-white fs-5">${e.nom}</span> <span class="badge-neon ms-2" style="color:${ROLES[e.role].color}">${ROLES[e.role].label}</span></td><td class="text-end"><span class="fw-bold text-white">$ ${(totalPerso).toLocaleString()}</span></td><td class="text-end">${btnDel}</td></tr>`;
             
-            hS += `<tr><td>${e.nom}</td><td><input type="number" class="form-control bg-black text-white text-center mx-auto" style="width:100px" value="${e.ventes}" onchange="updateVal(${e.id},'ventes',this.value)"></td><td>$ ${(salVar).toLocaleString()}</td></tr>`;
+            let toggleHTML = "-";
+            if(salFixBase > 0) {
+                let isChecked = e.primeActive ? "checked" : "";
+                toggleHTML = `<div class="form-check form-switch d-flex justify-content-center"><input class="form-check-input" type="checkbox" ${isChecked} onchange="togglePrime(${e.id})"></div>`;
+            }
+
+            let styleFix = salFixReel > 0 ? "text-white fw-bold" : "text-secondary text-decoration-line-through";
             
-            let roleBadg = `<span class="badge" style="color:${ROLES[e.role].color}; border:1px solid ${ROLES[e.role].color}">${ROLES[e.role].label}</span>`;
-            let fixBadg = salFix > 0 ? `<span class="text-white ms-2 small">+ ${salFix.toLocaleString()} Fixe</span>` : "";
-            
-            hSt += `<tr><td>${e.nom} ${roleBadg}</td><td class="text-end">$ ${(salVar+salFix).toLocaleString()} ${fixBadg}</td><td class="text-end"><button onclick="del(${e.id},'emp')" class="btn btn-sm btn-danger">X</button></td></tr>`;
+            hP += `<tr>
+                <td class="text-start ps-4 fw-bold text-white">${e.nom} <span class="small text-secondary ms-2">(${ROLES[e.role].label})</span></td>
+                <td><span class="${styleFix}">$ ${salFixBase.toLocaleString()}</span></td>
+                <td>${toggleHTML}</td>
+                <td><span class="text-gold">$ ${comRun.toLocaleString()}</span></td>
+                <td><span class="text-gold">$ ${comVente.toLocaleString()}</span></td>
+                <td class="text-end pe-4 fw-bold" style="color:var(--neon-green); font-size:1.2rem;">$ ${totalPerso.toLocaleString()}</td>
+            </tr>`;
         });
 
-        // 2. FACTURES
-        dbBills.forEach(b => {
-            tBills += b.val;
-            hB += `<tr><td>${b.motif}</td><td class="text-end text-primary">$ ${b.val.toLocaleString()}</td><td class="text-end"><button onclick="del(${b.id},'bill')" class="btn btn-sm text-white">X</button></td></tr>`;
-        });
+        dbBills.forEach(b => { tBills += b.val; hB += `<tr><td class="fw-bold text-white fs-5">${b.motif}</td><td class="text-end fw-bold" style="color:var(--neon-blue);">$ ${b.val.toLocaleString()}</td><td class="text-end"><button onclick="del(${b.id},'bill')" class="btn btn-sm btn-outline-light rounded-circle" style="width:30px;height:30px;padding:0;opacity:0.5;"><i class="fa-solid fa-xmark"></i></button></td></tr>`; });
 
-        // 3. CALCULS FINAUX
-        let benefBrut = tCA - tSalVar; // CA - Commissions
-        let taxe = (benefBrut > 0) ? benefBrut * TAX_RATE : 0;
-        let netInter = benefBrut - taxe;
-        let netFinal = netInter - tBills - tFix; // On enlève les factures ET ton salaire fixe
+        let totalCharges = tSalVar + tFix + tBills;
+        let beneficeImposable = tCA - totalCharges;
+        let taxe = (beneficeImposable > 0) ? beneficeImposable * TAX_RATE : 0;
+        let net = beneficeImposable - taxe;
 
-        // INJECTION
         document.getElementById("list-runs").innerHTML = hR;
         document.getElementById("list-sales").innerHTML = hS;
         document.getElementById("list-staff").innerHTML = hSt;
         document.getElementById("list-bills").innerHTML = hB;
+        document.getElementById("list-pay").innerHTML = hP;
 
-        document.getElementById("hub-brut").innerText = "$ " + benefBrut.toLocaleString();
-        document.getElementById("hub-tax").innerText = "- $ " + taxe.toLocaleString();
-        document.getElementById("hub-bills").innerText = "- $ " + tBills.toLocaleString();
-        document.getElementById("hub-fixed").innerText = "- $ " + tFix.toLocaleString();
+        // AJOUT CA DASHBOARD
+        document.getElementById("dash-ca").innerText = "$ " + tCA.toLocaleString();
+
+        document.getElementById("dash-brut").innerText = "$ " + beneficeImposable.toLocaleString();
+        document.getElementById("dash-brut").style.color = beneficeImposable >= 0 ? "white" : "var(--neon-red)";
+        document.getElementById("dash-tax").innerText = "- $ " + taxe.toLocaleString();
+        document.getElementById("dash-charges").innerText = "- $ " + (tBills + tFix).toLocaleString();
         
-        let elNet = document.getElementById("hub-net");
-        elNet.innerText = "$ " + netFinal.toLocaleString();
-        elNet.className = netFinal >= 0 ? "fs-2 fw-bold text-success" : "fs-2 fw-bold text-danger";
+        let totalSalaries = tSalVar + tFix;
+        document.getElementById("dash-salaries").innerText = "- $ " + totalSalaries.toLocaleString();
+        document.getElementById("total-cashout").innerText = "$ " + totalSalaries.toLocaleString();
+        
+        let elNet = document.getElementById("dash-net");
+        elNet.innerText = "$ " + net.toLocaleString();
+        elNet.style.color = net >= 0 ? "var(--neon-green)" : "var(--neon-red)";
+        elNet.style.textShadow = net >= 0 ? "0 0 30px rgba(0,255,157,0.5)" : "0 0 30px rgba(255, 42, 42, 0.5)";
 
-        // 4. GENERATION ORGANIGRAMME
         renderOrg(dbEmp);
-        document.getElementById("total-fixed-display").innerText = "$ " + tFix.toLocaleString();
     }
 
     function renderOrg(data) {
-        let tree = document.getElementById("org-display");
-        tree.innerHTML = "";
-
-        // Trier par importance : Boss > Co > Emp
-        let bosses = data.filter(e => e.role === 'boss');
-        let cos = data.filter(e => e.role === 'co');
-        let emps = data.filter(e => e.role === 'emp');
-
-        // ETAGE 1 : PATRON
-        if(bosses.length > 0) {
-            let row = document.createElement('div'); row.className = 'org-level';
-            bosses.forEach(b => {
-                row.innerHTML += `<div class="org-card boss"><div class="role-badge" style="color:var(--gold)">PDG</div><div class="fw-bold text-white fs-5">${b.nom}</div><div class="small text-secondary">Fixe: $1M</div></div>`;
-            });
-            tree.appendChild(row);
-            if(cos.length > 0 || emps.length > 0) tree.innerHTML += `<div class="org-connector"></div>`;
-        }
-
-        // ETAGE 2 : CO-PDG
-        if(cos.length > 0) {
-            let row = document.createElement('div'); row.className = 'org-level';
-            cos.forEach(c => {
-                row.innerHTML += `<div class="org-card manager"><div class="role-badge text-white">CO-PDG</div><div class="fw-bold text-white">${c.nom}</div><div class="small text-secondary">Fixe: $500k</div></div>`;
-            });
-            tree.appendChild(row);
-            if(emps.length > 0) tree.innerHTML += `<div class="org-connector"></div>`;
-        }
-
-        // ETAGE 3 : EMPLOYES
-        if(emps.length > 0) {
-            let row = document.createElement('div'); row.className = 'org-level';
-            emps.forEach(e => {
-                row.innerHTML += `<div class="org-card employee"><div class="role-badge text-secondary">STAFF</div><div class="text-white">${e.nom}</div><div class="small text-muted">Com: ${(e.grade*100)}%</div></div>`;
-            });
-            tree.appendChild(row);
-        }
+        let tree = document.getElementById("org-tree"); tree.innerHTML = "";
+        let levels = [data.filter(e=>e.role==='boss'), data.filter(e=>e.role==='co'), data.filter(e=>e.role==='emp')];
+        levels.forEach(lvl => {
+            if(lvl.length > 0) {
+                let row = document.createElement('div'); row.className = 'org-level';
+                lvl.forEach(e => { row.innerHTML += `<div class="org-card ${e.role}" style="border-color:${ROLES[e.role].neon}; box-shadow: 0 0 15px ${ROLES[e.role].neon}40;"><div class="fw-bold text-white fs-5 mb-1">${e.nom}</div><div class="badge-neon small" style="color:${ROLES[e.role].color}">${ROLES[e.role].label}</div></div>`; });
+                tree.appendChild(row);
+            }
+        });
     }
+    updateForm();
 </script>
 
 </body>
