@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Diamond City OS v11.0 - Full Analytics</title>
+    <title>Diamond City OS v13.0 - Cash Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -80,7 +80,7 @@
         .input-dc {
             background: rgba(0,0,0,0.2); border: none; border-bottom: 2px solid rgba(255,255,255,0.2);
             color: var(--gold-accent); font-family: 'Rajdhani', sans-serif; font-weight: 700; text-transform: uppercase;
-            text-align: center; padding: 15px; border-radius: 0; transition: 0.3s;
+            text-align: center; padding: 10px; border-radius: 0; transition: 0.3s;
         }
         .input-dc:focus {
             background: rgba(0,0,0,0.4); border-bottom-color: var(--gold-accent); outline: none; color: #fff;
@@ -144,7 +144,7 @@
         </div>
         <form onsubmit="event.preventDefault(); login();">
             <input type="text" class="form-control input-dc mb-5" style="font-size: 1.2rem;" placeholder="IDENTIFIANT" value="Sabri">
-            <button class="btn btn-gold w-100 py-3 fs-5">OUVRIR LE SYSTÈME</button>
+            <button class="btn btn-gold w-100 py-3 fs-5">TABLEAU DE BORD</button>
         </form>
     </div>
 </div>
@@ -154,7 +154,7 @@
     <nav class="sidebar">
         <div class="brand-box">
             <div class="brand-title fs-3">DIAMOND</div>
-            <div class="text-gold small" style="letter-spacing: 3px; opacity: 0.7;">Casino</div>
+            <div class="text-gold small" style="letter-spacing: 3px; opacity: 0.7;">Gestion</div>
         </div>
         <div class="nav-links mt-4">
             <div class="nav-item active" onclick="navTo('view-dashboard', this)"><i class="fa-solid fa-chart-pie"></i> ACCUEIL</div>
@@ -188,7 +188,6 @@
                 <div style="position: absolute; top:0; left:0; width:100%; height:4px; background: var(--gold-grad); box-shadow: 0 0 15px var(--gold-accent);"></div>
                 <h5 class="text-secondary mb-2" style="letter-spacing: 3px;">CHIFFRE D'AFFAIRES GLOBAL</h5>
                 <h1 class="display-3 fw-bold text-gold" id="dash-ca">$ 0</h1>
-                <p class="text-muted small mt-2">Cumul Total des Entrées (Runs + Ventes)</p>
             </div>
 
             <div class="row g-4 mb-5">
@@ -220,7 +219,7 @@
 
             <div class="glass-panel p-5 text-center position-relative overflow-hidden" style="border-top: none;">
                 <div style="position: absolute; top:-50%; left:-50%; width:200%; height:200%; background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 60%); z-index:-1;"></div>
-                <h5 class="text-secondary mb-3" style="letter-spacing: 3px;">SOLDE NET RÉEL</h5>
+                <h5 class="text-secondary mb-3" style="letter-spacing: 3px;">SOLDE NET RÉEL (POCHE PATRON)</h5>
                 <h1 class="display-2 fw-bold" style="color: var(--neon-green); text-shadow: 0 0 30px rgba(0,255,157,0.5);" id="dash-net">$ 0</h1>
             </div>
         </div>
@@ -228,14 +227,35 @@
         <div id="view-runs" class="d-none">
             <h3 class="text-white mb-5">LOGISTIQUE <span class="text-gold">RUNS</span></h3>
             <div class="glass-panel p-4" style="border-top: none;">
-                <table class="table table-dark table-hover align-middle text-center"><thead><tr><th>NOM</th><th>GRADE</th><th>NB RUNS</th><th>VALEUR (96k)</th></tr></thead><tbody id="list-runs"></tbody></table>
+                <table class="table table-dark table-hover align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>NOM</th>
+                            <th>NB RUNS</th>
+                            <th>TAUX %</th>
+                            <th>VALEUR RUN (96k)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-runs"></tbody>
+                </table>
             </div>
         </div>
 
         <div id="view-sales" class="d-none">
             <h3 class="text-white mb-5">VENTES <span class="text-gold">DIRECTES</span></h3>
             <div class="glass-panel p-4" style="border-top: none;">
-                <table class="table table-dark table-hover align-middle text-center"><thead><tr><th>NOM</th><th>GRADE</th><th>MONTANT ($)</th><th>COM.</th></tr></thead><tbody id="list-sales"></tbody></table>
+                <table class="table table-dark table-hover align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>NOM</th>
+                            <th>GRADE</th>
+                            <th>TOTAL VENTES ($)</th>
+                            <th>AJOUTER FACTURE</th>
+                            <th>COM.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-sales"></tbody>
+                </table>
             </div>
         </div>
 
@@ -248,7 +268,7 @@
                         <div class="mb-4"><label class="text-secondary small mb-2">IDENTITÉ</label><input type="text" id="newName" class="form-control input-dc" placeholder="NOM RP"></div>
                         <div class="mb-4"><label class="text-secondary small mb-2">POSTE</label><select id="newRole" class="form-select input-dc text-start ps-3" style="cursor: pointer;" onchange="updateForm()"><option value="emp">EMPLOYÉ</option><option value="co">CO-PATRON</option></select></div>
                         <div class="mb-5">
-                            <label class="text-secondary small mb-2">POURCENTAGE</label>
+                            <label class="text-secondary small mb-2">POURCENTAGE CONTRAT</label>
                             <select id="newGrade" class="form-select input-dc text-start ps-3" style="cursor: pointer;"><option value="0.30">DÉBUTANT (30%)</option><option value="0.45">CONFIRMÉ (45%)</option><option value="0.60">EXPERT (60%)</option><option value="0.75" disabled id="opt-co">CO-PATRON (75%)</option></select>
                         </div>
                         <button onclick="addEmp()" class="btn btn-gold w-100 py-3">VALIDER L'EMBAUCHE</button>
@@ -284,16 +304,7 @@
             <h3 class="text-white mb-5">BULLETINS DE <span style="color:var(--neon-green)">PAIE</span></h3>
             <div class="glass-panel p-4" style="border-top: 3px solid var(--neon-green);">
                 <table class="table table-dark table-hover align-middle text-center mb-5">
-                    <thead>
-                        <tr>
-                            <th class="text-start ps-4">EMPLOYÉ</th>
-                            <th>PRIME FIXE</th>
-                            <th>VERSER PRIME ?</th>
-                            <th>COM. RUNS</th>
-                            <th>COM. VENTES</th>
-                            <th class="text-end pe-4">TOTAL À PAYER</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th class="text-start ps-4">EMPLOYÉ</th><th>PRIME FIXE</th><th>VERSER PRIME ?</th><th>COM. RUNS</th><th>COM. VENTES</th><th class="text-end pe-4">TOTAL À PAYER</th></tr></thead>
                     <tbody id="list-pay"></tbody>
                 </table>
                 <div class="p-4 rounded text-center" style="background: rgba(0,255,157,0.05); border: 1px solid var(--neon-green);">
@@ -311,14 +322,14 @@
     const TAX_RATE = 0.30;
     
     const ROLES = {
-        'boss': { label: 'PDG', fix: 1000000, color: 'var(--gold-accent)', neon: 'var(--gold-accent)' },
-        'co':   { label: 'CO-PDG', fix: 500000, color: '#fff', neon: 'var(--neon-purple)' },
-        'emp':  { label: 'STAFF', fix: 0, color: '#888', neon: 'var(--neon-blue)' }
+        'boss': { label: 'PDG', fix: 1000000, color: 'var(--gold-accent)', neon: 'var(--gold-accent)', saleRate: 0.85, maxRun: 80 },
+        'co':   { label: 'CO-PDG', fix: 500000, color: '#fff', neon: 'var(--neon-purple)', saleRate: 0.75, maxRun: 70 },
+        'emp':  { label: 'STAFF', fix: 0, color: '#888', neon: 'var(--neon-blue)', maxRun: 0 }
     };
 
     let dbEmp = [
-        { id: 1, nom: "Sabri", role: "boss", grade: 0.85, runs: 0, ventes: 0, primeActive: true },
-        { id: 2, nom: "Max", role: "co", grade: 0.75, runs: 0, ventes: 0, primeActive: true }
+        { id: 1, nom: "Sabri", role: "boss", saleRate: 0.85, runRate: 80, runs: 0, ventes: 0, primeActive: true },
+        { id: 2, nom: "Max", role: "co", saleRate: 0.75, runRate: 70, runs: 0, ventes: 0, primeActive: true }
     ];
     let dbBills = [];
 
@@ -330,21 +341,52 @@
         document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('d-none')); document.getElementById(v).classList.remove('d-none');
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); e.classList.add('active'); renderAll();
     }
+    
     function updateForm() {
         let r = document.getElementById("newRole").value; let g = document.getElementById("newGrade");
         if(r==='co') { g.value="0.75"; g.disabled=true; document.getElementById("opt-co").disabled=false; } 
         else { g.value="0.30"; g.disabled=false; document.getElementById("opt-co").disabled=true; }
     }
+
     function addEmp() {
-        let n = document.getElementById("newName").value; let r = document.getElementById("newRole").value; let g = parseFloat(document.getElementById("newGrade").value);
-        if(r==='co') g=0.75;
-        if(n) { dbEmp.push({ id: Date.now(), nom: n, role: r, grade: g, runs: 0, ventes: 0, primeActive: true }); document.getElementById("newName").value = ""; renderAll(); }
+        let n = document.getElementById("newName").value; let r = document.getElementById("newRole").value; let gVal = parseFloat(document.getElementById("newGrade").value);
+        let sRate = gVal; let rRate = gVal * 100;
+        if(r==='co') { sRate = 0.75; rRate = 70; }
+        if(n) { dbEmp.push({ id: Date.now(), nom: n, role: r, saleRate: sRate, runRate: rRate, runs: 0, ventes: 0, primeActive: true }); document.getElementById("newName").value = ""; renderAll(); }
     }
+
     function addBill() {
         let m = document.getElementById("billName").value; let v = parseFloat(document.getElementById("billAmount").value);
         if(m && v) { dbBills.push({id: Date.now(), motif: m, val: v}); document.getElementById("billName").value=""; document.getElementById("billAmount").value=""; renderAll(); }
     }
-    function updateVal(id, t, v) { let e = dbEmp.find(x => x.id == id); if(e) { e[t] = parseInt(v)||0; renderAll(); } }
+
+    function updateVal(id, t, v) { 
+        let e = dbEmp.find(x => x.id == id); 
+        if(e) { 
+            if(t === 'runRate') {
+                let max = ROLES[e.role].maxRun;
+                if(max > 0 && v > max) v = max;
+                if(v < 0) v = 0;
+            }
+            e[t] = parseInt(v)||0; 
+            renderAll(); 
+        } 
+    }
+
+    // NOUVELLE FONCTION POUR AJOUTER UNE VENTE
+    function pushSale(id) {
+        let input = document.getElementById('input-sale-' + id);
+        let amount = parseFloat(input.value);
+        if(amount) {
+            let e = dbEmp.find(x => x.id == id);
+            if(e) {
+                e.ventes += amount;
+                input.value = "";
+                renderAll();
+            }
+        }
+    }
+    
     function togglePrime(id) { let e = dbEmp.find(x => x.id == id); if(e) { e.primeActive = !e.primeActive; renderAll(); } }
     function del(id, t) { if(confirm("Supprimer ?")) { if(t=='emp') dbEmp = dbEmp.filter(x => x.id != id); if(t=='bill') dbBills = dbBills.filter(x => x.id != id); renderAll(); } }
     function resetWeek() { if(confirm("Nouvelle Semaine ?")) { dbEmp.forEach(e => { e.runs=0; e.ventes=0; e.primeActive=true; }); dbBills = []; renderAll(); } }
@@ -355,19 +397,38 @@
 
         dbEmp.forEach(e => {
             let ca = (e.runs*RUN_PRICE) + e.ventes;
-            let salVar = ca * e.grade;
-            
             let salFixBase = ROLES[e.role].fix;
             let salFixReel = (salFixBase > 0 && e.primeActive) ? salFixBase : 0;
 
-            let comRun = (e.runs*RUN_PRICE) * e.grade;
-            let comVente = e.ventes * e.grade;
+            let comRun = (e.runs*RUN_PRICE) * (e.runRate / 100);
+            let comVente = e.ventes * e.saleRate;
             let totalPerso = comRun + comVente + salFixReel;
 
-            tCA += ca; tSalVar += salVar; tFix += salFixReel;
+            tCA += ca; tSalVar += (comRun + comVente); tFix += salFixReel;
 
-            hR += `<tr><td class="fw-bold">${e.nom}</td><td><span class="badge-neon" style="color:${ROLES[e.role].color}">${(e.grade*100)}%</span></td><td><input type="number" class="input-dc mx-auto" style="width:80px;padding:5px;" value="${e.runs}" onchange="updateVal(${e.id},'runs',this.value)"></td><td class="text-gold fw-bold">$ ${(e.runs*RUN_PRICE).toLocaleString()}</td></tr>`;
-            hS += `<tr><td class="fw-bold">${e.nom}</td><td><span class="badge-neon" style="color:${ROLES[e.role].color}">${(e.grade*100)}%</span></td><td><input type="number" class="input-dc mx-auto" style="width:120px;padding:5px;" value="${e.ventes}" onchange="updateVal(${e.id},'ventes',this.value)"></td><td class="text-gold fw-bold">$ ${(comVente).toLocaleString()}</td></tr>`;
+            // HTML LOGISTIQUE RUNS
+            let inputRate = "";
+            if(e.role === 'boss' || e.role === 'co') {
+                inputRate = `<input type="number" class="input-dc mx-auto" style="width:70px;padding:5px; color:${ROLES[e.role].color}" value="${e.runRate}" onchange="updateVal(${e.id},'runRate',this.value)">`;
+            } else {
+                inputRate = `<span class="badge-neon" style="color:${ROLES[e.role].color}">${e.runRate}%</span>`;
+            }
+            hR += `<tr><td class="fw-bold">${e.nom}</td><td><input type="number" class="input-dc mx-auto" style="width:80px;padding:5px;" value="${e.runs}" onchange="updateVal(${e.id},'runs',this.value)"></td><td>${inputRate}</td><td class="text-gold fw-bold">$ ${(e.runs*RUN_PRICE).toLocaleString()}</td></tr>`;
+            
+            // HTML VENTES (CAISSE ENREGISTREUSE)
+            hS += `<tr>
+                <td class="fw-bold">${e.nom}</td>
+                <td><span class="badge-neon" style="color:${ROLES[e.role].color}">${(e.saleRate*100)}%</span></td>
+                <td><input type="number" class="input-dc mx-auto" style="width:120px;padding:5px;" value="${e.ventes}" onchange="updateVal(${e.id},'ventes',this.value)"></td>
+                <td>
+                    <div class="input-group justify-content-center" style="max-width:200px; margin:auto;">
+                        <input id="input-sale-${e.id}" type="number" class="form-control input-dc" placeholder="+ $$" onkeydown="if(event.key==='Enter') pushSale(${e.id})">
+                        <button class="btn btn-outline-light" onclick="pushSale(${e.id})"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </td>
+                <td class="text-gold fw-bold">$ ${(comVente).toLocaleString()}</td>
+            </tr>`;
+            
             let btnDel = (e.role === 'boss' || e.role === 'co') ? '' : `<button onclick="del(${e.id},'emp')" class="btn btn-sm btn-outline-danger rounded-circle" style="width:30px;height:30px;padding:0;"><i class="fa-solid fa-xmark"></i></button>`;
             hSt += `<tr><td><span class="fw-bold text-white fs-5">${e.nom}</span> <span class="badge-neon ms-2" style="color:${ROLES[e.role].color}">${ROLES[e.role].label}</span></td><td class="text-end"><span class="fw-bold text-white">$ ${(totalPerso).toLocaleString()}</span></td><td class="text-end">${btnDel}</td></tr>`;
             
@@ -379,14 +440,7 @@
 
             let styleFix = salFixReel > 0 ? "text-white fw-bold" : "text-secondary text-decoration-line-through";
             
-            hP += `<tr>
-                <td class="text-start ps-4 fw-bold text-white">${e.nom} <span class="small text-secondary ms-2">(${ROLES[e.role].label})</span></td>
-                <td><span class="${styleFix}">$ ${salFixBase.toLocaleString()}</span></td>
-                <td>${toggleHTML}</td>
-                <td><span class="text-gold">$ ${comRun.toLocaleString()}</span></td>
-                <td><span class="text-gold">$ ${comVente.toLocaleString()}</span></td>
-                <td class="text-end pe-4 fw-bold" style="color:var(--neon-green); font-size:1.2rem;">$ ${totalPerso.toLocaleString()}</td>
-            </tr>`;
+            hP += `<tr><td class="text-start ps-4 fw-bold text-white">${e.nom}</td><td><span class="${styleFix}">$ ${salFixBase.toLocaleString()}</span></td><td>${toggleHTML}</td><td><span class="text-gold">$ ${comRun.toLocaleString()}</span></td><td><span class="text-gold">$ ${comVente.toLocaleString()}</span></td><td class="text-end pe-4 fw-bold" style="color:var(--neon-green); font-size:1.2rem;">$ ${totalPerso.toLocaleString()}</td></tr>`;
         });
 
         dbBills.forEach(b => { tBills += b.val; hB += `<tr><td class="fw-bold text-white fs-5">${b.motif}</td><td class="text-end fw-bold" style="color:var(--neon-blue);">$ ${b.val.toLocaleString()}</td><td class="text-end"><button onclick="del(${b.id},'bill')" class="btn btn-sm btn-outline-light rounded-circle" style="width:30px;height:30px;padding:0;opacity:0.5;"><i class="fa-solid fa-xmark"></i></button></td></tr>`; });
@@ -402,9 +456,7 @@
         document.getElementById("list-bills").innerHTML = hB;
         document.getElementById("list-pay").innerHTML = hP;
 
-        // AJOUT CA DASHBOARD
         document.getElementById("dash-ca").innerText = "$ " + tCA.toLocaleString();
-
         document.getElementById("dash-brut").innerText = "$ " + beneficeImposable.toLocaleString();
         document.getElementById("dash-brut").style.color = beneficeImposable >= 0 ? "white" : "var(--neon-red)";
         document.getElementById("dash-tax").innerText = "- $ " + taxe.toLocaleString();
